@@ -1,75 +1,95 @@
 package com.bridgelabz.hashtable;
 
 public class MyLinkedList<K> {
-	public INode<K> head;
-	public INode<K> tail;
+    public INode<K> head;
+    public INode<K> tail;
 
-	// Created linked list for all operations to be performed
-	public MyLinkedList() {
-		this.head = null;
-		this.tail = null;
-	}
+    //Created linked list for all operations to be performed
+    public MyLinkedList() {
+        this.head = null;
+        this.tail = null;
+    }
+    //Added the node
+    public void add(INode<K> newNode) {
+        if(this.tail == null) {
+            this.tail = newNode;
+        }
+        if(this.head == null) {
+            this.head = newNode;
+        }
+        else {
+            INode<K> tempNode = this.head;
+            this.head = newNode;
+            this.head.setNext(tempNode);
+        }
+    }
 
-	// Added the node
-	public void add(INode<K> newNode) {
-		if (this.tail == null) {
-			this.tail = newNode;
-		}
-		if (this.head == null) {
-			this.head = newNode;
-		} else {
-			INode<K> tempNode = this.head;
-			this.head = newNode;
-			this.head.setNext(tempNode);
-		}
-	}
+    //Appending
+    public void append(INode<K> myNode) {
+        if(this.head == null) {
+            this.head = myNode;
+        }
+        if(this.tail == null) {
+            this.tail = myNode;
+        }
+        else {
+            this.tail.setNext(myNode);
+            this.tail = myNode;
+        }
+    }
 
-	// Appending
-	public void append(INode<K> myNode) {
-		if (this.head == null) {
-			this.head = myNode;
-		}
-		if (this.tail == null) {
-			this.tail = myNode;
-		} else {
-			this.tail.setNext(myNode);
-			this.tail = myNode;
-		}
-	}
+    public INode<K> pop() {
+        INode<K> tempNode = this.head;
+        this.head = head.getNext();
+        return tempNode;
+    }
 
-	public INode<K> pop() {
-		INode<K> tempNode = this.head;
-		this.head = head.getNext();
-		return tempNode;
-	}
+    public INode<K> popLast() {
+        INode<K> tempNode = head;
+        while(!tempNode.getNext().equals(tail)) {
+            tempNode = tempNode.getNext();
+        }
+        this.tail = tempNode;
+        tempNode = tempNode.getNext();
+        return tempNode;
+    }
 
-	public INode<K> popLast() {
-		INode<K> tempNode = head;
-		while (!tempNode.getNext().equals(tail)) {
-			tempNode = tempNode.getNext();
-		}
-		this.tail = tempNode;
-		tempNode = tempNode.getNext();
-		return tempNode;
-	}
+    public INode<K> search(K key) {
+        INode<K> tempNode = head;
+        while(tempNode != null && tempNode.getNext() != null) {
+            if(tempNode.getKey().equals(key)) {
+                return tempNode;
+            }
+            tempNode = tempNode.getNext();
+        }
+        return null;
+    }
 
-	public INode<K> search(K key) {
-		INode<K> tempNode = head;
-		while (tempNode != null && tempNode.getNext() != null) {
-			if (tempNode.getKey().equals(key)) {
-				return tempNode;
-			}
-			tempNode = tempNode.getNext();
-		}
-		return null;
-	}
+    public void printMyNodes() {
+        System.out.println("My nodes are: "+ head);
+    }
 
-	public void printMyNodes() {
-		System.out.println("My nodes are: " + head);
-	}
+    @Override
+    public String toString() {
+        return "MyLinkedListNodes{ "+head+" }";
+    }
 
-	@Override
-	public String toString() {
-		return "MyLinkedListNodes{ " + head + " }";
-	}
+    /*Use LinkedList For Removal of word*/
+    public INode<K> removeParticularNode(INode<K> deleteNode) {
+        INode tempNode = this.head;
+        INode prev = null;
+        if(tempNode != null && tempNode.getKey() == deleteNode.getKey()) {
+            tempNode.setNext(null);
+            return tempNode;
+        }
+        else {
+            while(tempNode != null && tempNode.getKey() != deleteNode.getKey()) {
+                prev = tempNode;
+                tempNode = tempNode.getNext();
+            }
+            prev.setNext(tempNode.getNext());
+            tempNode.setNext(null);
+            return tempNode;
+        }
+    }
 }
