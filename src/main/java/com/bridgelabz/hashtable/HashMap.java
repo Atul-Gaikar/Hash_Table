@@ -1,33 +1,57 @@
 package com.bridgelabz.hashtable;
 
+import java.util.ArrayList;
+
 public class HashMap<K, V> {
-	// Called linked list to do the Hash Table Operation
 
-	MyLinkedList<K> myList;
+        private int numBuckets;
+        ArrayList<MyLinkedList<K>> myBucketArray;
 
-	public void MyHashmap() {
-		this.myList = new MyLinkedList<>();
-	}
+        public void MyLinkedHashMap() {
+            this.numBuckets = 10;
+            this.myBucketArray = new ArrayList<>(numBuckets);
+            for (int i = 0; i < numBuckets; i++) {
+                this.myBucketArray.add(null);
+            }
+        }
 
-	// Getting and Adding values
-	public V get(K Key) {
-		MapNode<K, V> mapNode = (MapNode<K, V>) this.myList.search(Key);
-		return (mapNode == null) ? null : mapNode.getValue();
-	}
+        //using hashcode to finding index
+        private int getBucketIndex(K key) {
+            int hashCode = Math.abs(key.hashCode());
+            int index = hashCode % numBuckets;
+            return index;
+        }
 
-	public void add(K key, V value) {
-		MapNode<K, V> mapNode = (MapNode<K, V>) this.myList.search(key);
-		if (mapNode == null) {
-			mapNode = new MapNode<>(key, value);
-			this.myList.append(mapNode);
-		} else {
-			mapNode.setValue(value);
-		}
+        /*Created LinkedList for each index
+        Used linked list to do hash table operations
+         */
+        public V get(K key) {
+            int index = this.getBucketIndex(key);
+            MyLinkedList<K> myLinkedList = this.myBucketArray.get(index);
+            if (myLinkedList == null)
+                return null;
+            MyHashMapNode<K, V> myMapNode = (MyHashMapNode<K, V>) myLinkedList.search(key);
+            return (myMapNode == null) ? null : myMapNode.getValue();
+        }
 
-	}
+        public void add(K key, V value) {
+            int index = this.getBucketIndex(key);
+            MyLinkedList<K> myLinkedList = this.myBucketArray.get(index);
+            if (myLinkedList == null) {
+                myLinkedList = new MyLinkedList<>();
+                this.myBucketArray.set(index, myLinkedList);
+            }
+            MyHashMapNode<K, V> myMapNode = (MyHashMapNode<K, V>) myLinkedList.search(key);
+            if (myMapNode == null) {
+				myMapNode = new MyHashMapNode<>(key, value);
+                myLinkedList.append(myMapNode);
+            } else {
+                myMapNode.setValue(value);
+            }
+        }
 
-	@Override
-	public String toString() {
-		return "MyHashMapNodes{ " + myList + " }";
-	}
-}
+        @Override
+        public String toString() {
+            return "MyLinkedHashMap List{"+ myBucketArray+ '}';
+        }
+    }

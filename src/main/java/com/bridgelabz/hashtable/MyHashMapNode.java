@@ -1,11 +1,12 @@
 package com.bridgelabz.hashtable;
 
-public class MapNode<K, V> implements INode<K> {
+public class MyHashMapNode<K, V> implements INode<K> {
+	// Created mymapnode with key value pair
 	K key;
 	V value;
-	MapNode<K, V> next;
+	MyHashMapNode<K, V> next;
 
-	public MapNode(K key, V value) {
+	public MyHashMapNode(K key, V value) {
 		this.key = key;
 		this.value = value;
 		next = null;
@@ -19,6 +20,7 @@ public class MapNode<K, V> implements INode<K> {
 	@Override
 	public void setKey(K key) {
 		this.key = key;
+
 	}
 
 	@Override
@@ -28,24 +30,26 @@ public class MapNode<K, V> implements INode<K> {
 
 	@Override
 	public void setNext(INode<K> next) {
-		this.next = (MapNode<K, V>) next;
+		this.next = (MyHashMapNode<K, V>) next;
 	}
 
+	// getting the value
 	public V getValue() {
 		return value;
 	}
 
+	// setting the value
 	public void setValue(V value) {
 		this.value = value;
 	}
 
 	@Override
 	public String toString() {
-		StringBuilder myMapNodeString = new StringBuilder();
-		myMapNodeString.append(" MyMapNode { " + " K = ").append(key).append(" V=").append(value).append(" } ");
+		StringBuilder mapNode = new StringBuilder();
+		mapNode.append("MyHashMapNode { " + " K = ").append(key).append(" V = ").append(value).append(" } ");
 		if (next != null) {
-			myMapNodeString.append("->").append(next);
+			mapNode.append("->").append(next);
 		}
-		return myMapNodeString.toString();
+		return mapNode.toString();
 	}
 }

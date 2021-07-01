@@ -1,6 +1,5 @@
 package com.bridgelabz.hashtable;
 
-
 public class Node<K> implements INode<K> {
 	private Node next;
 	private K key;
@@ -13,6 +12,7 @@ public class Node<K> implements INode<K> {
 	public K getKey() {
 		return key;
 	}
+
 	@Override
 	public void setKey(K key) {
 

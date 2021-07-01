@@ -1,11 +1,11 @@
 package com.bridgelabz.hashtable;
 
-public interface INode<K> {
-	K getKey();
+public interface INode <K> {
+    K getKey();
 
-	void setKey(K key);
+    void setKey(K key);
 
-	INode getNext();
+    INode<K> getNext();
 
-	void setNext(INode<K> next);
+    void setNext(INode<K> next);
 }
